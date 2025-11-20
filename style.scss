@@ -49,5 +49,89 @@ main{
     .section2{
         background-color:#C7E9EE;
         height: 100%;
+        display:grid;
+        grid-template-rows: 1fr 3fr 2fr;
+
+        .color{
+          border-bottom: black solid;
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          padding:15px;
+          
+            .colors{
+                height: 100%;
+                width: 90%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .colors-box{
+                    height: 50%;
+                    width: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+                    gap: 5px;
+                    
+                    .color1{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color2{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color3{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color4{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color5{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color6{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color7{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color8{
+                        background-color: #B2AAC1;
+                    }
+                    .color9{
+                        background-color: #B2AAC1;
+                        
+                    }
+                    .color10{
+                        background-color: #B2AAC1;
+                        
+                    }
+                }
+                
+            }  
+        }
+        .features{
+            padding: 10%;
+            border-bottom: black solid;
+
+            .feature{
+                display: flex;
+                align-items: center;
+                font-size: 2vw;
+                gap: 15px;
+                margin-bottom: 10px;
+                color: #174579;
+                font-weight: 800;
+                svg{
+                    width: 3vw;
+                    stroke-width: 2;
+                }
+            }
+        }
+        
     }
 }

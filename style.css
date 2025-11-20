@@ -46,4 +46,73 @@ main .section1 .border1 .border2 .board .col {
 main .section2 {
   background-color: #C7E9EE;
   height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 3fr 2fr;
+}
+main .section2 .color {
+  border-bottom: black solid;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 15px;
+}
+main .section2 .color .colors {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main .section2 .color .colors .colors-box {
+  height: 50%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
+}
+main .section2 .color .colors .colors-box .color1 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color2 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color3 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color4 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color5 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color6 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color7 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color8 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color9 {
+  background-color: #B2AAC1;
+}
+main .section2 .color .colors .colors-box .color10 {
+  background-color: #B2AAC1;
+}
+main .section2 .features {
+  padding: 10%;
+  border-bottom: black solid;
+}
+main .section2 .features .feature {
+  display: flex;
+  align-items: center;
+  font-size: 2vw;
+  gap: 15px;
+  margin-bottom: 10px;
+  color: #174579;
+  font-weight: 800;
+}
+main .section2 .features .feature svg {
+  width: 3vw;
+  stroke-width: 2;
 }/*# sourceMappingURL=style.css.map */
