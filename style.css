@@ -1,3 +1,10 @@
+:root {
+  --color1: #B2AAC1;
+  --color2: #DCDBDD;
+  --color3: #C7E9EE;
+  --color4: #174579;
+}
+
 * {
   padding: 0%;
   margin: 0%;
@@ -16,25 +23,25 @@ main {
   grid-template-columns: 3fr 1fr;
 }
 main .section1 {
-  background-color: #B2AAC1;
+  background-color: var(--color1);
   height: 100%;
   padding: 3%;
 }
 main .section1 .border1 {
   height: 100%;
   padding: 1%;
-  background-color: #B2A7C0;
-  border: 2px rgb(255, 255, 240) solid;
+  background-color: var(--color1);
+  border: 2px var(--color2) solid;
   border-radius: 15px;
 }
 main .section1 .border1 .border2 {
   height: 100%;
   padding: 2%;
-  background-color: #DCDBDD;
+  background-color: var(--color2);
   border-radius: 15px;
 }
 main .section1 .border1 .border2 .board {
-  background-color: #DBDADB;
+  background-color: var(--color2);
   width: 100%;
   height: 100%;
   display: grid;
@@ -44,7 +51,7 @@ main .section1 .border1 .border2 .board .col {
   border: 2px solid;
 }
 main .section2 {
-  background-color: #C7E9EE;
+  background-color: var(--color3);
   height: 100%;
   display: grid;
   grid-template-rows: 1fr 3fr 2fr;
@@ -104,15 +111,39 @@ main .section2 .features {
   border-bottom: black solid;
 }
 main .section2 .features .feature {
+  cursor: pointer;
   display: flex;
   align-items: center;
   font-size: 2vw;
   gap: 15px;
   margin-bottom: 10px;
-  color: #174579;
+  color: var(--color4);
   font-weight: 800;
 }
 main .section2 .features .feature svg {
   width: 3vw;
   stroke-width: 2;
+}
+main .section2 .working {
+  padding: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.text-sticky-note {
+  width: 15em;
+  background-color: yellowgreen;
+  padding: 10%;
+  text-align: center;
+}
+.text-sticky-note input {
+  background: transparent;
+  border: none;
+  opacity: 0;
+}
+.text-sticky-note p {
+  height: 100%;
+  overflow-wrap: break-word;
+  overflow: scroll;
+  scrollbar-width: none;
 }/*# sourceMappingURL=style.css.map */
