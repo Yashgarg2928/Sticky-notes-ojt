@@ -169,3 +169,69 @@ main{
         scrollbar-width: none;
     }
 }
+.audio-sticky-note {
+    width: 15em;
+    background-color: rgb(63, 175, 97);
+    padding: 10%;
+    text-align: center;
+
+    .upload-audio-btn {
+        background-color: #174579;
+        color: white;
+        border: none;
+        padding: 0.6em 1.2em;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        margin-bottom: 1em;
+        transition: 0.2s ease;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .audio-container {
+        width: 100%;
+        margin-top: 0.5em;
+
+        audio {
+            width: 100%;
+            outline: none;
+        }
+    }
+}
+.video-sticky-note {
+    width: 15em;
+    background-color: lightcoral; 
+    padding: 10%;
+    text-align: center;
+
+    input {
+        background: transparent;
+        border: none;
+        opacity: 0;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .upload-video-btn {
+        margin-top: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background-color: #33659d;
+        color: #333;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #ddd;
+        }
+    }
+}

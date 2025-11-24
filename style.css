@@ -146,4 +146,64 @@ main .section2 .working {
   overflow-wrap: break-word;
   overflow: scroll;
   scrollbar-width: none;
+}
+
+.audio-sticky-note {
+  width: 15em;
+  background-color: rgb(63, 175, 97);
+  padding: 10%;
+  text-align: center;
+}
+.audio-sticky-note .upload-audio-btn {
+  background-color: #174579;
+  color: white;
+  border: none;
+  padding: 0.6em 1.2em;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-bottom: 1em;
+  transition: 0.2s ease;
+}
+.audio-sticky-note .upload-audio-btn:hover {
+  opacity: 0.85;
+}
+.audio-sticky-note .audio-container {
+  width: 100%;
+  margin-top: 0.5em;
+}
+.audio-sticky-note .audio-container audio {
+  width: 100%;
+  outline: none;
+}
+
+.video-sticky-note {
+  width: 15em;
+  background-color: lightcoral;
+  padding: 10%;
+  text-align: center;
+}
+.video-sticky-note input {
+  background: transparent;
+  border: none;
+  opacity: 0;
+}
+.video-sticky-note video {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.video-sticky-note .upload-video-btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background-color: #33659d;
+  color: #333;
+  transition: all 0.2s ease-in-out;
+}
+.video-sticky-note .upload-video-btn:hover {
+  background-color: #ddd;
 }/*# sourceMappingURL=style.css.map */
