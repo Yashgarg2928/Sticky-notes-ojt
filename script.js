@@ -114,8 +114,6 @@ deleteNote.addEventListener("click", function () {
     
     let deleteStickyNote = makeNote();
     deleteStickyNote.classList.add("delete-sticky-note");
-
-    deleteStickyNote.appendChild(deleteBtn);
   
     workingArea.appendChild(deleteStickyNote);
 
