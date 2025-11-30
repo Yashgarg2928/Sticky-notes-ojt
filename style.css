@@ -206,4 +206,20 @@ main .section2 .working {
 }
 .video-sticky-note .upload-video-btn:hover {
   background-color: #ddd;
+}
+
+@media (max-width: 800px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60vh 80vh;
+  }
+  main .section2 {
+    grid-template-rows: 1fr 2fr 2fr;
+  }
+  main .section2 .features .feature {
+    font-size: 5vw;
+  }
+  main .section2 .features .feature svg {
+    width: 6vw;
+  }
 }/*# sourceMappingURL=style.css.map */

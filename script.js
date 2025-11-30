@@ -5,7 +5,7 @@ let atatchVideo = document.querySelector(".attach-video")
 let deleteNote = document.querySelector(".delete-note")
 let workingArea = document.querySelector(".working")
 
-function makeNote(){
+function makeNote(classname){
     let stickyNote = document.createElement("div")
     return stickyNote
 }
@@ -121,5 +121,7 @@ deleteNote.addEventListener("click", function () {
         deleteStickyNote.remove();
     });
 });
+
+
 
 

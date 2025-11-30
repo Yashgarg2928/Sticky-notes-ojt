@@ -235,3 +235,23 @@ main{
         }
     }
 }
+
+@media (max-width:800px) {
+    main{
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vh 80vh;
+
+        .section2{
+            grid-template-rows: 1fr 2fr 2fr;
+            .features{
+                .feature{
+                    font-size: 5vw;
+                    svg{
+                        width: 6vw;
+                    }
+                }
+            }
+        }
+    }
+    
+}
