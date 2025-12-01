@@ -39,18 +39,18 @@ main .section1 .border1 .border2 {
   padding: 2%;
   background-color: var(--color2);
   border-radius: 15px;
+  overflow: scroll;
 }
 main .section1 .border1 .border2 .board {
   background-color: var(--color2);
   width: 100%;
-  height: 100%;
+  height: 1000%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   position: relative;
 }
 main .section1 .border1 .border2 .board .sticky-note {
   position: absolute;
-  width: 16%;
 }
 main .section1 .border1 .border2 .board .col {
   border: 2px solid;
@@ -130,16 +130,30 @@ main .section2 .features .feature svg {
   stroke-width: 2;
 }
 main .section2 .working {
-  padding: 10%;
+  position: relative; /* allow absolute positioning of sticky notes */
+  height: 17.3em; /* fixed height so it doesn't expand */
+  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center; /* center sticky notes inside working */
+  overflow: hidden;
+}
+
+.sticky-note {
+  width: 15em;
+  height: 15em;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
 }
 
 .text-sticky-note {
-  width: 15em;
   background-color: yellowgreen;
-  padding: 10%;
-  text-align: center;
 }
 .text-sticky-note input {
   background: transparent;
@@ -147,19 +161,50 @@ main .section2 .working {
   opacity: 0;
 }
 .text-sticky-note p {
-  height: 100%;
-  overflow-wrap: break-word;
-  overflow: scroll;
-  scrollbar-width: none;
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  word-wrap: break-word;
+  text-align: center;
 }
 
 .audio-sticky-note {
-  width: 15em;
   background-color: rgb(63, 175, 97);
-  padding: 10%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .audio-sticky-note .upload-btn {
+  background-color: #174579;
+  color: white;
+  border: none;
+  padding: 0.6em 1.2em;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
+  transition: 0.2s ease;
+}
+.audio-sticky-note .upload-btn:hover {
+  opacity: 0.85;
+}
+.audio-sticky-note .audio-container {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+}
+.audio-sticky-note .audio-container audio {
+  width: 100%;
+  outline: none;
+}
+
+.video-sticky-note {
+  background-color: lightcoral;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.video-sticky-note .upload-video-btn {
   background-color: #174579;
   color: white;
   border: none;
@@ -170,47 +215,15 @@ main .section2 .working {
   margin-bottom: 1em;
   transition: 0.2s ease;
 }
-.audio-sticky-note .upload-btn:hover {
+.video-sticky-note .upload-video-btn:hover {
   opacity: 0.85;
 }
-.audio-sticky-note .audio-container {
-  width: 100%;
-  margin-top: 0.5em;
-}
-.audio-sticky-note .audio-container audio {
-  width: 100%;
-  outline: none;
-}
-
-.video-sticky-note {
-  width: 15em;
-  background-color: lightcoral;
-  padding: 10%;
-  text-align: center;
-}
-.video-sticky-note input {
-  background: transparent;
-  border: none;
-  opacity: 0;
-}
 .video-sticky-note video {
+  flex: 1;
   width: 100%;
-  height: auto;
   border-radius: 5px;
-  margin-top: 10px;
-}
-.video-sticky-note .upload-video-btn {
-  margin-top: 10px;
-  padding: 5px 10px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  background-color: #33659d;
-  color: #333;
-  transition: all 0.2s ease-in-out;
-}
-.video-sticky-note .upload-video-btn:hover {
-  background-color: #ddd;
+  margin-top: 0.5em;
+  overflow: hidden;
 }
 
 @media (max-width: 800px) {

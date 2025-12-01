@@ -5,11 +5,12 @@ let atatchVideo = document.querySelector(".attach-video")
 let deleteNote = document.querySelector(".delete-note")
 let workingArea = document.querySelector(".working")
 let stickyNote;
-function makeNote(classname,mediaType){
+
+function makeNote(classname, mediaType){
     workingArea.innerHTML = ""
     stickyNote = document.createElement("div")
     stickyNote.classList.add(classname,"sticky-note");
-    
+
     switch(classname){
         case "text-sticky-note":
             let input = document.createElement("input")
@@ -28,7 +29,9 @@ function makeNote(classname,mediaType){
                     textarea.textContent = `${event.target.value}`
                 })
             })
+            input.click();
             break;
+
         case "audio-sticky-note":
         case "video-sticky-note":
             let uploadBtn = document.createElement("button");
@@ -37,103 +40,130 @@ function makeNote(classname,mediaType){
 
             let Container = document.createElement("div");
             Container.classList.add(`${mediaType}-container`);
+            Container.style.display = "flex";
+            Container.style.justifyContent = "center";
+            Container.style.alignItems = "center";
+            Container.style.flexDirection = "column";
+            Container.style.height = "calc(100% - 2em)";
 
             stickyNote.appendChild(uploadBtn);
             stickyNote.appendChild(Container);
 
             workingArea.appendChild(stickyNote);
 
-            uploadBtn.addEventListener("click", function () {
-                let input = document.createElement("input");
-                input.type = "file";
-                input.accept = `${mediaType}/*`;
-                input.click();
+            uploadBtn.addEventListener("click", function (e) {
+                e.stopPropagation(); // Prevent dragging while clicking upload
+                let inputFile = document.createElement("input");
+                inputFile.type = "file";
+                inputFile.accept = `${mediaType}/*`;
+                inputFile.click();
 
-                input.addEventListener("change", function (e) {
-                    let file = e.target.files[0];
+                inputFile.addEventListener("change", function (ev) {
+                    let file = ev.target.files[0];
                     if (!file) return;
 
                     let Player = document.createElement(`${mediaType}`);
                     Player.controls = true;
                     Player.src = URL.createObjectURL(file);
+                    Player.style.maxWidth = "100%";
+                    Player.style.maxHeight = "100%";
+                    Player.style.borderRadius = "5px";
 
                     uploadBtn.remove();
                     Container.appendChild(Player);
                 });
             });
             break;
-        
-            
     }
 
-    function stickyNoteclick(){
-        event.preventDefault();
-        console.log("yes")
-        board.appendChild(stickyNote);
-        stickyNote.removeEventListener("click",stickyNoteclick);
-        stickyNote.addEventListener("click",moveStickyNote);
-    }
-    function moveStickyNote(){
-        console.log("hell")
-        board.addEventListener('mousemove',changePos)
-        stickyNote.removeEventListener("click",moveStickyNote);
-
-    }
-    function changePos(){
-        const rect = board.getBoundingClientRect();
-
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        stickyNote.style.top = `${y}px`
-        stickyNote.style.left = `${x}px`  
-        console.log("moving")
-        stickyNote.addEventListener("click",() => {
-            board.removeEventListener("mousemove",changePos);
-            stickyNote.addEventListener("click",stickyNoteclick);
-        })  
-       
-    };
-    stickyNote.addEventListener("contextmenu",stickyNoteclick)
+    // Smooth Drag-and-Drop
+    enableDrag(stickyNote);
 }
 
+// Smooth Drag-and-Drop with read-only on drop
+function enableDrag(stickyNote) {
+    let offsetX = 0;
+    let offsetY = 0;
+    let isDragging = false;
 
+    stickyNote.addEventListener('mousedown', (e) => {
+        e.preventDefault();
 
+        // Only start drag if not clicking inside input or button
+        if(e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
 
+        isDragging = true;
 
+        const rect = stickyNote.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
 
+        if (!board.contains(stickyNote)) {
+            board.appendChild(stickyNote);
+        }
 
+        stickyNote.style.position = 'absolute';
+        stickyNote.style.zIndex = 1000;
+    });
 
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
 
+        let x = e.clientX - board.getBoundingClientRect().left - offsetX;
+        let y = e.clientY - board.getBoundingClientRect().top - offsetY;
 
+        const boardRect = board.getBoundingClientRect();
+        const noteRect = stickyNote.getBoundingClientRect();
+
+        x = Math.max(0, Math.min(x, boardRect.width - noteRect.width));
+        y = Math.max(0, Math.min(y, boardRect.height - noteRect.height));
+
+        stickyNote.style.left = x + 'px';
+        stickyNote.style.top = y + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            stickyNote.style.zIndex = 1;
+
+            // Make the sticky note read-only when dropped
+            makeReadOnly(stickyNote);
+        }
+    });
+}
+
+// Make Sticky Note Read-Only
+function makeReadOnly(stickyNote){
+    if(stickyNote.classList.contains("text-sticky-note")){
+        let input = stickyNote.querySelector("input");
+        if(input) input.disabled = true;
+    } else if(stickyNote.classList.contains("audio-sticky-note") || stickyNote.classList.contains("video-sticky-note")){
+        let uploadBtn = stickyNote.querySelector(".upload-btn");
+        if(uploadBtn) uploadBtn.remove();
+    }
+}
+
+// Event Listeners
 addNotes.addEventListener("click",function (){
     makeNote("text-sticky-note","text");
-
 })
+
 attachAudio.addEventListener("click", function () {
- 
     makeNote("audio-sticky-note","audio");
 });
+
 atatchVideo.addEventListener("click", function () {
-
     makeNote("video-sticky-note","video");
-
 });
+
 deleteNote.addEventListener("click", function () {
-    
     workingArea.innerHTML = "";
-    
-    let deleteStickyNote = makeNote();
+    let deleteStickyNote = document.createElement("div");
     deleteStickyNote.classList.add("delete-sticky-note");
-  
     workingArea.appendChild(deleteStickyNote);
 
-    deleteBtn.addEventListener("click", function () {     
+    deleteStickyNote.addEventListener("click", function () {     
         deleteStickyNote.remove();
     });
 });
-
-
-
-
-
