@@ -46,6 +46,11 @@ main .section1 .border1 .border2 .board {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
+}
+main .section1 .border1 .border2 .board .sticky-note {
+  position: absolute;
+  width: 16%;
 }
 main .section1 .border1 .border2 .board .col {
   border: 2px solid;
@@ -154,7 +159,7 @@ main .section2 .working {
   padding: 10%;
   text-align: center;
 }
-.audio-sticky-note .upload-audio-btn {
+.audio-sticky-note .upload-btn {
   background-color: #174579;
   color: white;
   border: none;
@@ -165,7 +170,7 @@ main .section2 .working {
   margin-bottom: 1em;
   transition: 0.2s ease;
 }
-.audio-sticky-note .upload-audio-btn:hover {
+.audio-sticky-note .upload-btn:hover {
   opacity: 0.85;
 }
 .audio-sticky-note .audio-container {

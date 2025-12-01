@@ -46,6 +46,12 @@ main{
                     height: 100%;
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
+                    position: relative;
+                    .sticky-note{
+                        position: absolute;
+                        width: 16%;
+                        
+                    }
                     .col{
                         border: 2px solid;
                     }
@@ -175,7 +181,7 @@ main{
     padding: 10%;
     text-align: center;
 
-    .upload-audio-btn {
+    .upload-btn {
         background-color: #174579;
         color: white;
         border: none;

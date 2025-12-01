@@ -4,108 +4,119 @@ let attachAudio = document.querySelector(".attach-audio")
 let atatchVideo = document.querySelector(".attach-video")
 let deleteNote = document.querySelector(".delete-note")
 let workingArea = document.querySelector(".working")
-
-function makeNote(classname){
-    let stickyNote = document.createElement("div")
-    return stickyNote
-}
-addNotes.addEventListener("click",function (){
+let stickyNote;
+function makeNote(classname,mediaType){
     workingArea.innerHTML = ""
-    let textStickyNote = makeNote();
-    textStickyNote.classList.add("text-sticky-note");
+    stickyNote = document.createElement("div")
+    stickyNote.classList.add(classname,"sticky-note");
+    
+    switch(classname){
+        case "text-sticky-note":
+            let input = document.createElement("input")
+            input.setAttribute("type","text")
+            stickyNote.appendChild(input);
 
-    let input = document.createElement("input")
-    input.setAttribute("type","text")
-    textStickyNote.appendChild(input);
+            let textarea = document.createElement("p");
+            stickyNote.appendChild(textarea);
 
-    let textarea = document.createElement("p");
-    textStickyNote.appendChild(textarea);
+            workingArea.appendChild(stickyNote);
 
-    workingArea.appendChild(textStickyNote);
+            stickyNote.addEventListener("click",function(){
+                input.focus()
 
-    textStickyNote.addEventListener("click",function(){
-        input.focus()
+                input.addEventListener("input",function(event){
+                    textarea.textContent = `${event.target.value}`
+                })
+            })
+            break;
+        case "audio-sticky-note":
+        case "video-sticky-note":
+            let uploadBtn = document.createElement("button");
+            uploadBtn.textContent = `Upload ${mediaType}`;
+            uploadBtn.classList.add("upload-btn");
 
-        input.addEventListener("input",function(event){
-            textarea.textContent = `${event.target.value}`
-        })
-    })
+            let Container = document.createElement("div");
+            Container.classList.add(`${mediaType}-container`);
 
+            stickyNote.appendChild(uploadBtn);
+            stickyNote.appendChild(Container);
+
+            workingArea.appendChild(stickyNote);
+
+            uploadBtn.addEventListener("click", function () {
+                let input = document.createElement("input");
+                input.type = "file";
+                input.accept = `${mediaType}/*`;
+                input.click();
+
+                input.addEventListener("change", function (e) {
+                    let file = e.target.files[0];
+                    if (!file) return;
+
+                    let Player = document.createElement(`${mediaType}`);
+                    Player.controls = true;
+                    Player.src = URL.createObjectURL(file);
+
+                    uploadBtn.remove();
+                    Container.appendChild(Player);
+                });
+            });
+            break;
+        
+            
+    }
+
+    function stickyNoteclick(){
+        event.preventDefault();
+        console.log("yes")
+        board.appendChild(stickyNote);
+        stickyNote.removeEventListener("click",stickyNoteclick);
+        stickyNote.addEventListener("click",moveStickyNote);
+    }
+    function moveStickyNote(){
+        console.log("hell")
+        board.addEventListener('mousemove',changePos)
+        stickyNote.removeEventListener("click",moveStickyNote);
+
+    }
+    function changePos(){
+        const rect = board.getBoundingClientRect();
+
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        stickyNote.style.top = `${y}px`
+        stickyNote.style.left = `${x}px`  
+        console.log("moving")
+        stickyNote.addEventListener("click",() => {
+            board.removeEventListener("mousemove",changePos);
+            stickyNote.addEventListener("click",stickyNoteclick);
+        })  
+       
+    };
+    stickyNote.addEventListener("contextmenu",stickyNoteclick)
+}
+
+
+
+
+
+
+
+
+
+
+addNotes.addEventListener("click",function (){
+    makeNote("text-sticky-note","text");
 
 })
 attachAudio.addEventListener("click", function () {
  
-    workingArea.innerHTML = "";
-
-    let audioStickyNote = makeNote();
-    audioStickyNote.classList.add("audio-sticky-note");
-
-    let uploadBtn = document.createElement("button");
-    uploadBtn.textContent = "Upload Audio";
-    uploadBtn.classList.add("upload-audio-btn");
-
-    let audioContainer = document.createElement("div");
-    audioContainer.classList.add("audio-container");
-
-    audioStickyNote.appendChild(uploadBtn);
-    audioStickyNote.appendChild(audioContainer);
-
-    workingArea.appendChild(audioStickyNote);
-
-    uploadBtn.addEventListener("click", function () {
-        let input = document.createElement("input");
-        input.type = "file";
-        input.accept = "audio/*";
-        input.click();
-
-        input.addEventListener("change", function (e) {
-            let file = e.target.files[0];
-            if (!file) return;
-
-            let audioPlayer = document.createElement("audio");
-            audioPlayer.controls = true;
-            audioPlayer.src = URL.createObjectURL(file);
-
-            uploadBtn.remove();
-            audioContainer.appendChild(audioPlayer);
-        });
-    });
+    makeNote("audio-sticky-note","audio");
 });
 atatchVideo.addEventListener("click", function () {
 
-    workingArea.innerHTML = "";
-
-    let videoStickyNote = makeNote();
-    videoStickyNote.classList.add("video-sticky-note");
-
-    let uploadBtn = document.createElement("button");
-    uploadBtn.textContent = "Upload Video";
-    uploadBtn.classList.add("upload-video-btn");
-
-    videoStickyNote.appendChild(uploadBtn);
-    workingArea.appendChild(videoStickyNote);
-
-    uploadBtn.addEventListener("click", function () {
-        let input = document.createElement("input");
-        input.type = "file";
-        input.accept = "video/*";  
-        input.click();
-
-        input.addEventListener("change", function (e) {
-            let file = e.target.files[0];
-            if (!file) return;
-
-            let videoPlayer = document.createElement("video");
-            videoPlayer.controls = true;                   
-            videoPlayer.src = URL.createObjectURL(file);
-            videoPlayer.style.width = "100%";               
-            videoPlayer.style.borderRadius = "8px";
-           
-            uploadBtn.remove();
-   
-            videoStickyNote.appendChild(videoPlayer);
-        });
-    });
+    makeNote("video-sticky-note","video");
 
 });
 deleteNote.addEventListener("click", function () {
@@ -121,6 +132,7 @@ deleteNote.addEventListener("click", function () {
         deleteStickyNote.remove();
     });
 });
+
 
 
 
