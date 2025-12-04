@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 colorbtns.addEventListener("click", (e) => {
     if (e.target.classList.contains("color-button")) {
         color = window.getComputedStyle(e.target).backgroundColor;
+        workingArea.querySelector(".sticky-note").style.backgroundColor = color
     }
 });
 
