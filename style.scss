@@ -42,8 +42,6 @@ main{
                 border-radius:15px;
                 overflow:scroll;
                 
-            
-            
                 .board{
                     background-color: var(--boardcolor);
                     width: 100%;
@@ -53,8 +51,6 @@ main{
                     position: relative;
                     .sticky-note{
                         position: absolute;
-                        
-                        
                     }
                     .col{
                         border: 2px solid var(--colcolor);
@@ -71,10 +67,11 @@ main{
 
         .color{
             border-bottom: black solid;
-            display: grid;
+            display: flex;
             grid-template-columns: 1fr 2fr;
             padding:15px;
             position: relative;
+            justify-content: center;
             
             .themebtn{
                 position: absolute;
@@ -88,60 +85,31 @@ main{
                 }
             }
             .colors{
-                height: 100%;
-                width: 90%;
                 display: flex;
+                width: 100%;
+                height: 100%;
                 justify-content: center;
                 align-items: center;
-                .colors-box{
-                    height: 50%;
+
+                form{
                     width: 100%;
+                    height: 100%;
+                    padding: 5%;
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
-                    gap: 5px;
-                    
-                    .color1{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color2{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color3{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color4{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color5{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color6{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color7{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color8{
-                        background-color: #B2AAC1;
-                    }
-                    .color9{
-                        background-color: #B2AAC1;
-                        
-                    }
-                    .color10{
-                        background-color: #B2AAC1;
-                        
-                    }
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    gap: 2%;
+                    row-gap: 10%;
+
+                    .button1 { background-color: #FF7F7F; }
+                    .button2 { background-color: #87CEFA; }
+                    .button3 { background-color: #FFF064; }
+                    .button4 { background-color: #90EE90; }
+                    .button5 { background-color: #FFBE6E; }
+                    .button6 { background-color: #FFA0C3; }
+                    .button7 { background-color: #E1E1E1; }
+                    .button8 { background-color: #D2B48C; }
                 }
-                
-            }  
+            }
         }
         .features{
             padding: 10%;
@@ -164,118 +132,202 @@ main{
         }
         
         .working{
-            position: relative; /* allow absolute positioning of sticky notes */
-            height: 17.3em;       /* fixed height so it doesn't expand */
+            position: relative; 
+            height: 17.3em;       
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center; /* center sticky notes inside working */
+            align-items: center; 
             overflow: hidden;
-            
-            
         }
     }
 }
 
+// --- STICKY NOTE STYLES ---
+
+
 .sticky-note {
-    width: 15em;
-    height: 15em; // fixed height
-    padding: 1em; // inner padding
-    box-sizing: border-box; // include padding in width/height
+    width: auto;
+    height: 80%;
+    aspect-ratio: 1 / 1 ; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* This was causing the issue */
+    overflow: hidden;
+    position: relative; 
+
+    // 1. Priority Dots (Top Right)
+    .priority-container {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        gap: 5px;
+        z-index: 100;
+
+        .priority-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+            
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    // 2. Due Date (Top Left)
+    .date-container {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        display: flex;
+        align-items: center;
+        z-index: 100;
+        font-size: 12px;
+        font-family: sans-serif;
+        color: #333;
+
+        span {
+            margin-right: 5px;
+            font-weight: 600;
+            white-space: nowrap; /* Prevent label from wrapping */
+        }
+
+        .date-input {
+            border: none;
+            border-bottom: 1px solid #555;
+            
+            outline: none;
+            font-size: 12px;
+            
+            /* --- FIXES --- */
+            width: 110px;       /* Increased width slightly */
+            text-align: left;   /* Forces text to align correctly */
+            padding-left: 2px;  /* Small padding for readability */
+            
+            cursor: text;
+            font-family: inherit;
+            color: #333;
+            opacity: 1; 
+            height: auto; 
+        }
+    }
+}
+
+.text-sticky-note {
+    padding: 1em;
+    padding-top: 2.5em; 
+
+    // --- FIX IS HERE ---
+    // Changed "input" to "input[type='text']"
+    // This ensures we ONLY hide the main typing box, not the date picker.
+    .text-input {
+        background: transparent;
+        border: none;
+        opacity: 0;
+        height: 1px; 
+        width: 1px;
+    }
+
+    p {
+        font-size: 1.2rem;
+        flex: 1; 
+        width: 100%;
+        overflow-y: auto; 
+        word-wrap: break-word;
+        text-align: center;
+        margin-top: 5px;
+    }
+}
+
+.audio-sticky-note {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    
-}
+    padding-top: 2.5em; 
 
-    .text-sticky-note {
-        background-color: yellowgreen;
+    .upload-btn {
+        background-color: #174579;
+        color: white;
+        border: none;
+        padding: 0.6em 1.2em;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        margin-bottom: 0.5em;
+        transition: 0.2s ease;
 
-        input {
-            background: transparent;
-            border: none;
-            opacity: 0;
-        }
-
-        p {
-            flex: 1; // take available space
-            width: 100%;
-            overflow-y: auto; // scroll if text overflows
-            word-wrap: break-word;
-            text-align: center;
-        }
-}
-
-    .audio-sticky-note {
-        background-color: rgb(63, 175, 97);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-
-        .upload-btn {
-            background-color: #174579;
-            color: white;
-            border: none;
-            padding: 0.6em 1.2em;
-            border-radius: 6px;
-            cursor: pointer;
-                font-size: 0.9em;
-                margin-bottom: 0.5em;
-                transition: 0.2s ease;
-
-            &:hover {
-                opacity: 0.85;
-                }
-        }
-
-        .audio-container {
-            flex: 1;
-            width: 100%;
-            overflow-y: auto;
-
-            audio {
-                width: 100%;
-                outline: none;
-            }
-        }
-}
-
-    .video-sticky-note {
-        background-color: lightcoral;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-
-        .upload-video-btn {
-            background-color: #174579;  // same as audio
-            color: white;
-            border: none;
-            padding: 0.6em 1.2em;
-            border-radius: 6px;
-            cursor: pointer;
-                font-size: 0.9em;
-                margin-bottom: 1em;
-                transition: 0.2s ease;
-
-            &:hover {
+        &:hover {
             opacity: 0.85;
-            }
         }
+    }
+
+    .audio-container {
+        flex: 1;
+        width: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        audio {
+            width: 100%;
+            outline: none;
+        }
+    }
+}
+
+.video-sticky-note {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 2.5em; 
+
+    .upload-btn {
+        background-color: #174579;
+        color: white;
+        border: none;
+        padding: 0.6em 1.2em;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        margin-bottom: 1em;
+        transition: 0.2s ease;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .video-container {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         video {
-            flex: 1; // fill remaining space
+            flex: 1; 
             width: 100%;
             border-radius: 5px;
             margin-top: 0.5em;
             overflow: hidden;
+            object-fit: cover;
         }
     }
+}
 
 
-@media (max-width:800px) {
+@media (max-width:600px) {
     main{
         grid-template-columns: 1fr;
         grid-template-rows: 60vh 80vh;
@@ -292,5 +344,4 @@ main{
             }
         }
     }
-    
 }

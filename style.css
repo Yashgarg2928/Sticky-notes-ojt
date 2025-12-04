@@ -65,10 +65,11 @@ main .section2 {
 }
 main .section2 .color {
   border-bottom: black solid;
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 2fr;
   padding: 15px;
   position: relative;
+  justify-content: center;
 }
 main .section2 .color .themebtn {
   position: absolute;
@@ -82,48 +83,44 @@ main .section2 .color .themebtn svg {
   color: var(--color4);
 }
 main .section2 .color .colors {
-  height: 100%;
-  width: 90%;
   display: flex;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 }
-main .section2 .color .colors .colors-box {
-  height: 50%;
+main .section2 .color .colors form {
   width: 100%;
+  height: 100%;
+  padding: 5%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2%;
+  row-gap: 10%;
 }
-main .section2 .color .colors .colors-box .color1 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button1 {
+  background-color: #FF7F7F;
 }
-main .section2 .color .colors .colors-box .color2 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button2 {
+  background-color: #87CEFA;
 }
-main .section2 .color .colors .colors-box .color3 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button3 {
+  background-color: #FFF064;
 }
-main .section2 .color .colors .colors-box .color4 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button4 {
+  background-color: #90EE90;
 }
-main .section2 .color .colors .colors-box .color5 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button5 {
+  background-color: #FFBE6E;
 }
-main .section2 .color .colors .colors-box .color6 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button6 {
+  background-color: #FFA0C3;
 }
-main .section2 .color .colors .colors-box .color7 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button7 {
+  background-color: #E1E1E1;
 }
-main .section2 .color .colors .colors-box .color8 {
-  background-color: #B2AAC1;
-}
-main .section2 .color .colors .colors-box .color9 {
-  background-color: #B2AAC1;
-}
-main .section2 .color .colors .colors-box .color10 {
-  background-color: #B2AAC1;
+main .section2 .color .colors form .button8 {
+  background-color: #D2B48C;
 }
 main .section2 .features {
   padding: 10%;
@@ -144,49 +141,104 @@ main .section2 .features .feature svg {
   stroke-width: 2;
 }
 main .section2 .working {
-  position: relative; /* allow absolute positioning of sticky notes */
-  height: 17.3em; /* fixed height so it doesn't expand */
+  position: relative;
+  height: 17.3em;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; /* center sticky notes inside working */
+  align-items: center;
   overflow: hidden;
 }
 
 .sticky-note {
-  width: 15em;
-  height: 15em;
-  padding: 1em;
+  width: auto;
+  height: 80%;
+  aspect-ratio: 1/1;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  text-align: center;
+  text-align: center; /* This was causing the issue */
   overflow: hidden;
+  position: relative;
+}
+.sticky-note .priority-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  gap: 5px;
+  z-index: 100;
+}
+.sticky-note .priority-container .priority-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s;
+}
+.sticky-note .priority-container .priority-dot:hover {
+  transform: scale(1.1);
+}
+.sticky-note .date-container {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  font-size: 12px;
+  font-family: sans-serif;
+  color: #333;
+}
+.sticky-note .date-container span {
+  margin-right: 5px;
+  font-weight: 600;
+  white-space: nowrap; /* Prevent label from wrapping */
+}
+.sticky-note .date-container .date-input {
+  border: none;
+  border-bottom: 1px solid #555;
+  outline: none;
+  font-size: 12px;
+  /* --- FIXES --- */
+  width: 110px; /* Increased width slightly */
+  text-align: left; /* Forces text to align correctly */
+  padding-left: 2px; /* Small padding for readability */
+  cursor: text;
+  font-family: inherit;
+  color: #333;
+  opacity: 1;
+  height: auto;
 }
 
 .text-sticky-note {
-  background-color: yellowgreen;
+  padding: 1em;
+  padding-top: 2.5em;
 }
-.text-sticky-note input {
+.text-sticky-note .text-input {
   background: transparent;
   border: none;
   opacity: 0;
+  height: 1px;
+  width: 1px;
 }
 .text-sticky-note p {
+  font-size: 1.2rem;
   flex: 1;
   width: 100%;
   overflow-y: auto;
   word-wrap: break-word;
   text-align: center;
+  margin-top: 5px;
 }
 
 .audio-sticky-note {
-  background-color: rgb(63, 175, 97);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-top: 2.5em;
 }
 .audio-sticky-note .upload-btn {
   background-color: #174579;
@@ -206,6 +258,10 @@ main .section2 .working {
   flex: 1;
   width: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .audio-sticky-note .audio-container audio {
   width: 100%;
@@ -213,12 +269,13 @@ main .section2 .working {
 }
 
 .video-sticky-note {
-  background-color: lightcoral;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-top: 2.5em;
 }
-.video-sticky-note .upload-video-btn {
+.video-sticky-note .upload-btn {
   background-color: #174579;
   color: white;
   border: none;
@@ -229,18 +286,28 @@ main .section2 .working {
   margin-bottom: 1em;
   transition: 0.2s ease;
 }
-.video-sticky-note .upload-video-btn:hover {
+.video-sticky-note .upload-btn:hover {
   opacity: 0.85;
 }
-.video-sticky-note video {
+.video-sticky-note .video-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.video-sticky-note .video-container video {
   flex: 1;
   width: 100%;
   border-radius: 5px;
   margin-top: 0.5em;
   overflow: hidden;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   main {
     grid-template-columns: 1fr;
     grid-template-rows: 60vh 80vh;
